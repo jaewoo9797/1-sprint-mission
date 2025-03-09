@@ -23,7 +23,7 @@ CREATE TABLE user_statuses
     user_statuses_id UUID,
     created_at       TIMESTAMP NOT NULL,
     updated_at       TIMESTAMP,
-    user_id          UUID,
+    user_id          UUID      NOT NULL,
     last_active_at   TIMESTAMP NOT NULL,
     CONSTRAINT pk_user_statuses_id PRIMARY KEY (user_statuses_id),
     CONSTRAINT fk_users_user_statuses
@@ -41,8 +41,7 @@ CREATE TABLE binary_contents
     size              BIGINT       NOT NULL,
     content_type      VARCHAR(100) NOT NULL,
     bytes             BYTEA        NOT NULL,
-    CONSTRAINT pk_binary_contents_id PRIMARY KEY (binary_content_id),
-
+    CONSTRAINT pk_binary_contents_id PRIMARY KEY (binary_content_id)
 );
 
 -- CHANNELS
@@ -64,7 +63,7 @@ CREATE TABLE messages
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
     content    TEXT,
-    channel_id UUID,
+    channel_id UUID NOT NULL ,
     author_id  UUID,
     CONSTRAINT pk_messages_id PRIMARY KEY (message_id),
     CONSTRAINT fk_messages_channels
@@ -109,5 +108,6 @@ CREATE TABLE read_statuses
     CONSTRAINT fk_read_statuses_channels
         FOREIGN KEY (channel_id)
             REFERENCES channels (channel_id)
-            ON DELETE CASCADE
+            ON DELETE CASCADE,
+    CONSTRAINT uk_read_statuses_users_channels UNIQUE (user_id, channel_id)
 );
