@@ -15,7 +15,7 @@ CREATE TABLE users
 (
     user_id    UUID,
     created_at TIMESTAMP    NOT NULL,
-    updated_at TIMESTAMP    ,
+    updated_at TIMESTAMP,
     username   VARCHAR(50)  NOT NULL,
     email      VARCHAR(100) NOT NULL,
     password   VARCHAR(60)  NOT NULL,
@@ -33,10 +33,10 @@ CREATE TABLE users
 CREATE TABLE user_statuses
 (
     user_status_id UUID,
-    created_at       TIMESTAMP NOT NULL,
-    updated_at       TIMESTAMP,
-    user_id          UUID      NOT NULL,
-    last_active_at   TIMESTAMP NOT NULL,
+    created_at     TIMESTAMP NOT NULL,
+    updated_at     TIMESTAMP,
+    user_id        UUID      NOT NULL,
+    last_active_at TIMESTAMP NOT NULL,
     CONSTRAINT pk_user_statuses_id PRIMARY KEY (user_statuses_id),
     CONSTRAINT fk_users_user_statuses
         FOREIGN KEY (user_id)
@@ -63,7 +63,7 @@ CREATE TABLE messages
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP,
     content    TEXT,
-    channel_id UUID NOT NULL ,
+    channel_id UUID      NOT NULL,
     author_id  UUID,
     CONSTRAINT pk_messages_id PRIMARY KEY (message_id),
     CONSTRAINT fk_messages_channels

@@ -78,7 +78,7 @@ public class MessageController implements MessageApi {
 
     @GetMapping("/{channelId}")
     public ResponseEntity<List<Message>> findAllByChannelId(
-            @PathVariable ("channelId") UUID channelId) {
+            @PathVariable("channelId") UUID channelId) {
         List<Message> messages = messageService.findAllByChannelId(channelId);
         return ResponseEntity
                 .status(HttpStatus.OK)

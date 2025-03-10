@@ -54,6 +54,6 @@ public class Message extends BaseUpdatableEntity implements Serializable {
     }
 
     public List<UUID> getAttachmentIds() {
-      return this.attachments.stream().map(BaseEntity::getId).toList();
+        return this.attachments.stream().map(BaseEntity::getId).toList();
     }
 }

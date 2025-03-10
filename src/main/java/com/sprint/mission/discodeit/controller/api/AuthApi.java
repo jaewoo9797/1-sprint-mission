@@ -28,8 +28,8 @@ public interface AuthApi {
     )
     @ApiResponses(
             {@ApiResponse(responseCode = "200", description = "로그인 성공"),
-            @ApiResponse(responseCode = "400", description = "User name not found",
-                    content = @Content(schema = @Schema(examples = "User name not found", implementation = String.class)))}
+                    @ApiResponse(responseCode = "400", description = "User name not found",
+                            content = @Content(schema = @Schema(examples = "User name not found", implementation = String.class)))}
     )
     ResponseEntity<User> login(LoginRequest request);
 
