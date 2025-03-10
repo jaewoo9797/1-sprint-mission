@@ -8,8 +8,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -32,7 +30,7 @@ public class User extends BaseUpdatableEntity implements Serializable {
     private String password;
 
     @OneToOne
-    @JoinColumn(name = "profile_id" , referencedColumnName = "binary_content_id")
+    @JoinColumn(name = "profile_id", referencedColumnName = "binary_content_id")
     private BinaryContent profile;
 
     @OneToOne(mappedBy = "user")
@@ -58,5 +56,9 @@ public class User extends BaseUpdatableEntity implements Serializable {
             this.password = newPassword;
             anyValueUpdated = true;
         }
+    }
+
+    public UUID getProfileId() {
+        return this.profile.getId();
     }
 }

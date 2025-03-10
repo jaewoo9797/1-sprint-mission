@@ -7,13 +7,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
-import lombok.Getter;
-
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
@@ -26,29 +25,29 @@ import lombok.NoArgsConstructor;
 )
 public class UserStatus extends BaseUpdatableEntity implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private Instant lastActiveAt;
+    private Instant lastActiveAt;
 
-  @OneToOne
-  @JoinColumn(name = "user_id")
-  private User user;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-  public UserStatus(UUID userId, Instant lastActiveAt) {
-    this.lastActiveAt = lastActiveAt;
-  }
-
-  public void update(Instant lastActiveAt) {
-    boolean anyValueUpdated = false;
-    if (lastActiveAt != null && !lastActiveAt.equals(this.lastActiveAt)) {
-      this.lastActiveAt = lastActiveAt;
-      anyValueUpdated = true;
+    public UserStatus(UUID userId, Instant lastActiveAt) {
+        this.lastActiveAt = lastActiveAt;
     }
-  }
 
-  public Boolean isOnline() {
-    Instant instantFiveMinutesAgo = Instant.now().minus(Duration.ofMinutes(5));
+    public void update(Instant lastActiveAt) {
+        boolean anyValueUpdated = false;
+        if (lastActiveAt != null && !lastActiveAt.equals(this.lastActiveAt)) {
+            this.lastActiveAt = lastActiveAt;
+            anyValueUpdated = true;
+        }
+    }
 
-    return lastActiveAt.isAfter(instantFiveMinutesAgo);
-  }
+    public Boolean isOnline() {
+        Instant instantFiveMinutesAgo = Instant.now().minus(Duration.ofMinutes(5));
+
+        return lastActiveAt.isAfter(instantFiveMinutesAgo);
+    }
 }

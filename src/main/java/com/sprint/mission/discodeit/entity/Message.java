@@ -1,5 +1,6 @@
 package com.sprint.mission.discodeit.entity;
 
+import com.sprint.mission.discodeit.entity.base.BaseEntity;
 import com.sprint.mission.discodeit.entity.base.BaseUpdatableEntity;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
@@ -38,7 +39,8 @@ public class Message extends BaseUpdatableEntity implements Serializable {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
-    @OneToMany(mappedBy = "binary_content_id")
+    @OneToMany
+    @JoinColumn(name = "binary_content_id")
     private List<BinaryContent> attachments = new ArrayList<>();
 
     public Message(String content, UUID channelId, UUID authorId, List<UUID> attachmentIds) {
@@ -49,5 +51,9 @@ public class Message extends BaseUpdatableEntity implements Serializable {
         if (newContent != null && !newContent.equals(this.content)) {
             this.content = newContent;
         }
+    }
+
+    public List<UUID> getAttachmentIds() {
+      return this.attachments.stream().map(BaseEntity::getId).toList();
     }
 }

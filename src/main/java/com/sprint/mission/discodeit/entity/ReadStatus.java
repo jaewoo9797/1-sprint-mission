@@ -47,4 +47,12 @@ public class ReadStatus extends BaseUpdatableEntity implements Serializable {
             anyValueUpdated = true;
         }
     }
+
+    public UUID getChannelId() {
+        return channel.getId();
+    }
+
+    public UUID getUserId() {
+        return user.getId();
+    }
 }
