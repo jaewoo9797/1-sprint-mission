@@ -1,4 +1,16 @@
 -- USER
+CREATE TABLE binary_contents
+(
+    binary_content_id UUID,
+    created_at        TIMESTAMP    NOT NULL,
+    file_name         VARCHAR(255) NOT NULL,
+    size              BIGINT       NOT NULL,
+    content_type      VARCHAR(100) NOT NULL,
+    bytes             BYTEA        NOT NULL,
+    CONSTRAINT pk_binary_contents_id PRIMARY KEY (binary_content_id)
+);
+
+-- USER STATUSES
 CREATE TABLE users
 (
     user_id    UUID,
@@ -17,7 +29,7 @@ CREATE TABLE users
             ON DELETE SET NULL
 );
 
--- USER STATUSES
+-- BINARY_CONTENT
 CREATE TABLE user_statuses
 (
     user_statuses_id UUID,
@@ -30,18 +42,6 @@ CREATE TABLE user_statuses
         FOREIGN KEY (user_id)
             REFERENCES users (user_id)
             ON DELETE CASCADE
-);
-
--- BINARY_CONTENT
-CREATE TABLE binary_contents
-(
-    binary_content_id UUID,
-    created_at        TIMESTAMP    NOT NULL,
-    file_name         VARCHAR(255) NOT NULL,
-    size              BIGINT       NOT NULL,
-    content_type      VARCHAR(100) NOT NULL,
-    bytes             BYTEA        NOT NULL,
-    CONSTRAINT pk_binary_contents_id PRIMARY KEY (binary_content_id)
 );
 
 -- CHANNELS
