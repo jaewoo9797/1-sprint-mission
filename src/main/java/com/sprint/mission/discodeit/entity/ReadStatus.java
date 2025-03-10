@@ -1,42 +1,50 @@
 package com.sprint.mission.discodeit.entity;
 
 import com.sprint.mission.discodeit.entity.base.BaseUpdatableEntity;
-import lombok.Getter;
-
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@Entity
+@Table(name = "read_statuses")
+@AttributeOverride(
+        name = "id",
+        column = @Column(name = "read_status_id")
+)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReadStatus extends BaseUpdatableEntity implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  private UUID id;
-  private Instant createdAt;
-  private Instant updatedAt;
-  //
-  private UUID userId;
-  private UUID channelId;
-  private Instant lastReadAt;
+    private static final long serialVersionUID = 1L;
 
-  public ReadStatus(UUID userId, UUID channelId, Instant lastReadAt) {
-    this.id = UUID.randomUUID();
-    this.createdAt = Instant.now();
-    //
-    this.userId = userId;
-    this.channelId = channelId;
-    this.lastReadAt = lastReadAt;
-  }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-  public void update(Instant newLastReadAt) {
-    boolean anyValueUpdated = false;
-    if (newLastReadAt != null && !newLastReadAt.equals(this.lastReadAt)) {
-      this.lastReadAt = newLastReadAt;
-      anyValueUpdated = true;
+    @ManyToOne
+    @JoinColumn(name = "channel_id")
+    private Channel channel;
+
+    private Instant lastReadAt;
+
+    public ReadStatus(UUID userId, UUID channelId, Instant lastReadAt) {
+        this.lastReadAt = lastReadAt;
     }
 
-    if (anyValueUpdated) {
-      this.updatedAt = Instant.now();
+    public void update(Instant newLastReadAt) {
+        boolean anyValueUpdated = false;
+        if (newLastReadAt != null && !newLastReadAt.equals(this.lastReadAt)) {
+            this.lastReadAt = newLastReadAt;
+            anyValueUpdated = true;
+        }
     }
-  }
 }

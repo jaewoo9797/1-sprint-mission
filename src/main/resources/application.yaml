@@ -23,12 +23,6 @@ spring:
 #      mode: always
 #      schema-locations: classpath:schema.sql
 
-
-discodeit:
-  repository:
-    type: file   # jcf | file
-    file-directory: .discodeit
-
 # Swagger
 springdoc:
   swagger-ui:

@@ -1,47 +1,53 @@
 package com.sprint.mission.discodeit.entity;
 
 import com.sprint.mission.discodeit.entity.base.BaseUpdatableEntity;
-import lombok.Getter;
-
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@Entity
+@Table(name = "messages")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AttributeOverride(
+        name = "id",
+        column = @Column(name = "message_id")
+)
 public class Message extends BaseUpdatableEntity implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private UUID id;
-  private Instant createdAt;
-  private Instant updatedAt;
-  //
-  private String content;
-  //
-  private UUID channelId;
-  private UUID authorId;
-  private List<UUID> attachmentIds;
+    private String content;
 
-  public Message(String content, UUID channelId, UUID authorId, List<UUID> attachmentIds) {
-    this.id = UUID.randomUUID();
-    this.createdAt = Instant.now();
-    //
-    this.content = content;
-    this.channelId = channelId;
-    this.authorId = authorId;
-    this.attachmentIds = attachmentIds;
-  }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
 
-  public void update(String newContent) {
-    boolean anyValueUpdated = false;
-    if (newContent != null && !newContent.equals(this.content)) {
-      this.content = newContent;
-      anyValueUpdated = true;
+    @ManyToOne
+    @JoinColumn(name = "channel_id")
+    private Channel channel;
+
+    @OneToMany(mappedBy = "binary_content_id")
+    private List<BinaryContent> attachments = new ArrayList<>();
+
+    public Message(String content, UUID channelId, UUID authorId, List<UUID> attachmentIds) {
+        this.content = content;
     }
 
-    if (anyValueUpdated) {
-      this.updatedAt = Instant.now();
+    public void update(String newContent) {
+        if (newContent != null && !newContent.equals(this.content)) {
+            this.content = newContent;
+        }
     }
-  }
 }

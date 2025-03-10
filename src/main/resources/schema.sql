@@ -15,7 +15,7 @@ CREATE TABLE users
 (
     user_id    UUID,
     created_at TIMESTAMP    NOT NULL,
-    updated_at TIMESTAMP    NOT NULL,
+    updated_at TIMESTAMP    ,
     username   VARCHAR(50)  NOT NULL,
     email      VARCHAR(100) NOT NULL,
     password   VARCHAR(60)  NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE users
 -- BINARY_CONTENT
 CREATE TABLE user_statuses
 (
-    user_statuses_id UUID,
+    user_status_id UUID,
     created_at       TIMESTAMP NOT NULL,
     updated_at       TIMESTAMP,
     user_id          UUID      NOT NULL,
